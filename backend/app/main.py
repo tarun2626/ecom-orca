@@ -1,19 +1,38 @@
 from fastapi import FastAPI
-from app.core.config import settings
+from contextlib import asynccontextmanager
+import os
+from dotenv import load_dotenv
 
-from app.api.v1.api import api_router
+load_dotenv()
 
-app = FastAPI(
-    title=settings.PROJECT_NAME,
-    openapi_url=f"{settings.API_V1_STR}/openapi.json"
-)
+from app.database import connect_to_mongo, close_mongo_connection
+from app.services.ingestion import IngestionService
+import asyncio
 
-app.include_router(api_router, prefix=settings.API_V1_STR)
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup: Connect to DB
+    await connect_to_mongo()
+    
+    # Start Ingestion Service Background Task
+    ingestion = IngestionService()
+    task = asyncio.create_task(ingestion.start_background_loop())
+    
+    print("Starting up OmniStack Orchestrator...")
+    yield
+    # Shutdown: Disconnect DB
+    task.cancel()
+    await close_mongo_connection()
+    print("Shutting down...")
+
+app = FastAPI(title="OmniStack Orchestrator", lifespan=lifespan)
+
+from app.routers import dashboard, analytics, traffic
+
+app.include_router(dashboard.router)
+app.include_router(analytics.router)
+app.include_router(traffic.router)
 
 @app.get("/")
 async def root():
-    return {"message": "Welcome to eCommerce Orchestrator API (Blade Runner Edition)"}
-
-@app.get("/health")
-async def health_check():
-    return {"status": "healthy"}
+    return {"message": "OmniStack Orchestrator API is running"}
