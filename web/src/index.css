@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-blade-900 text-blade-100 font-sans antialiased overflow-x-hidden;
+    background-image: 
+      radial-gradient(circle at 50% 50%, rgba(255, 69, 0, 0.05) 0%, transparent 50%),
+      linear-gradient(rgba(10, 10, 10, 0.9), rgba(10, 10, 10, 0.9)),
+      url('/noise.png'); /* Optional noise texture */
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-blade-900;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-blade-700 rounded-full hover:bg-blade-500 transition-colors;
+  }
+}
+
+.text-glow {
+  text-shadow: 0 0 10px rgba(255, 69, 0, 0.7);
+}
+
+.box-glow {
+  box-shadow: 0 0 20px rgba(255, 69, 0, 0.1);
+}
