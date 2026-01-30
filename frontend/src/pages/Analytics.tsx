@@ -18,34 +18,34 @@ const Analytics = () => {
         { platform: 'BigCommerce', latency: 140 },
     ];
 
-    const COLORS = ['#3b82f6', '#a855f7', '#10b981', '#f59e0b'];
+    const COLORS = ['#2563EB', '#9333EA', '#10B981', '#F59E0B'];
 
     return (
-        <div className="p-8 space-y-8 max-w-7xl mx-auto">
+        <div className="p-8 space-y-8 max-w-7xl mx-auto text-slate-900">
             <div>
-                <h2 className="text-3xl font-bold text-white mb-2">Platform Analytics</h2>
-                <p className="text-slate-400">Detailed cost and performance breakdown across stacks.</p>
+                <h2 className="text-3xl font-bold text-slate-900 mb-2">Platform Analytics</h2>
+                <p className="text-slate-500">Detailed cost and performance breakdown across stacks.</p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
                 {/* Cost Analysis Bar Chart */}
-                <div className="glass-card p-6 h-[400px] flex flex-col">
+                <div className="glass-card p-6 h-[400px] flex flex-col bg-white border border-slate-200 shadow-sm rounded-xl">
                     <div className="flex items-center justify-between mb-6 shrink-0">
-                        <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-                            <DollarSign size={18} className="text-purple-400" />
+                        <h3 className="text-lg font-semibold text-slate-900 flex items-center gap-2">
+                            <DollarSign size={18} className="text-purple-600" />
                             Transaction Cost Analysis
                         </h3>
                     </div>
                     <div className="flex-1 min-h-0 w-full">
                         <ResponsiveContainer width="100%" height="100%">
                             <BarChart data={costData} layout="vertical">
-                                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" horizontal={false} />
+                                <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" horizontal={false} className="stroke-slate-200" />
                                 <XAxis type="number" stroke="#64748b" fontSize={12} tickFormatter={(val) => `$${val}`} />
-                                <YAxis dataKey="platform" type="category" stroke="#94a3b8" fontSize={12} width={100} />
+                                <YAxis dataKey="platform" type="category" stroke="#64748b" fontSize={12} width={100} />
                                 <Tooltip
-                                    cursor={{ fill: 'rgba(255,255,255,0.05)' }}
-                                    contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b', color: '#f8fafc' }}
+                                    cursor={{ fill: 'rgba(59, 130, 246, 0.05)' }}
+                                    contentStyle={{ backgroundColor: 'var(--tw-prose-body)', borderColor: 'var(--tw-prose-invert-body)', color: '#0f172a', borderRadius: '8px' }}
                                 />
                                 <Bar dataKey="cost_transaction" fill="#8884d8" radius={[0, 4, 4, 0]} barSize={30}>
                                     {costData.map((_, index) => (
@@ -58,24 +58,24 @@ const Analytics = () => {
                 </div>
 
                 {/* Latency Comparison Chart */}
-                <div className="glass-card p-6 h-[400px] flex flex-col">
+                <div className="glass-card p-6 h-[400px] flex flex-col bg-white border border-slate-200 shadow-sm rounded-xl">
                     <div className="flex items-center justify-between mb-6 shrink-0">
-                        <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-                            <Zap size={18} className="text-yellow-400" />
+                        <h3 className="text-lg font-semibold text-slate-900 flex items-center gap-2">
+                            <Zap size={18} className="text-amber-500" />
                             Latency Benchmarks (ms)
                         </h3>
                     </div>
                     <div className="flex-1 min-h-0 w-full">
                         <ResponsiveContainer width="100%" height="100%">
                             <BarChart data={latencyData}>
-                                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+                                <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} className="stroke-slate-200" />
                                 <XAxis dataKey="platform" stroke="#64748b" fontSize={12} />
                                 <YAxis stroke="#64748b" fontSize={12} />
                                 <Tooltip
-                                    cursor={{ fill: 'rgba(255,255,255,0.05)' }}
-                                    contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b', color: '#f8fafc' }}
+                                    cursor={{ fill: 'rgba(59, 130, 246, 0.05)' }}
+                                    contentStyle={{ backgroundColor: 'var(--tw-prose-body)', borderColor: 'var(--tw-prose-invert-body)', color: '#0f172a', borderRadius: '8px' }}
                                 />
-                                <Bar dataKey="latency" fill="#f59e0b" radius={[4, 4, 0, 0]} barSize={50} />
+                                <Bar dataKey="latency" fill="#F59E0B" radius={[4, 4, 0, 0]} barSize={50} />
                             </BarChart>
                         </ResponsiveContainer>
                     </div>
@@ -84,11 +84,11 @@ const Analytics = () => {
             </div>
 
             {/* Recommendation Panel */}
-            <div className="glass-card p-6 border-l-4 border-l-blue-500">
-                <h3 className="text-lg font-bold text-white mb-2">💡 AI Recommendation</h3>
-                <p className="text-slate-300">
-                    Based on current traffic volume (High), <span className="font-semibold text-white">Shopify Plus</span> is currently
-                    <span className="text-emerald-400 font-bold"> 40% more cost-effective</span> than Magento due to lower infrastructure overhead.
+            <div className="glass-card p-6 border-l-4 border-l-blue-600 bg-white border-r border-y border-r-slate-200 border-y-slate-200 shadow-sm rounded-xl">
+                <h3 className="text-lg font-bold text-slate-900 mb-2">💡 AI Recommendation</h3>
+                <p className="text-slate-600">
+                    Based on current traffic volume (High), <span className="font-semibold text-slate-900">Shopify Plus</span> is currently
+                    <span className="text-emerald-600 font-bold"> 40% more cost-effective</span> than Magento due to lower infrastructure overhead.
                     Recommended Action: <span className="underline decoration-blue-500 decoration-2 underline-offset-4">Route 80% of traffic to Shopify</span>.
                 </p>
             </div>

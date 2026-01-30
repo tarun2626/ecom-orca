@@ -25,13 +25,24 @@ async def lifespan(app: FastAPI):
     await close_mongo_connection()
     print("Shutting down...")
 
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI(title="OmniStack Orchestrator", lifespan=lifespan)
 
-from app.routers import dashboard, analytics, traffic
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+from app.routers import dashboard, analytics, traffic, auth
 
 app.include_router(dashboard.router)
 app.include_router(analytics.router)
 app.include_router(traffic.router)
+app.include_router(auth.router)
 
 @app.get("/")
 async def root():

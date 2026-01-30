@@ -1,12 +1,14 @@
 import { useState } from 'react';
-import { LayoutDashboard, BarChart3, Shuffle, Settings, ChevronLeft, ChevronRight, Activity } from 'lucide-react';
+import { LayoutDashboard, BarChart3, Shuffle, Settings, ChevronLeft, ChevronRight, Activity, LogOut } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
+import { useAuth } from '../context/AuthContext';
 
 const Sidebar = () => {
     const location = useLocation();
     const [collapsed, setCollapsed] = useState(false);
+    const { logout } = useAuth();
 
     const navItems = [
         { icon: LayoutDashboard, label: 'Overview', path: '/' },
@@ -19,25 +21,25 @@ const Sidebar = () => {
         <motion.div
             initial={{ width: 256 }}
             animate={{ width: collapsed ? 80 : 256 }}
-            className="h-screen bg-slate-900/50 backdrop-blur-xl border-r border-white/10 text-white flex flex-col relative z-20"
+            className="h-screen bg-white border-r border-slate-200 text-slate-900 flex flex-col relative z-20"
         >
             <div className="p-4 flex items-center justify-between">
                 {!collapsed && (
                     <div className="flex items-center space-x-2">
-                        <div className="h-8 w-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/30">
+                        <div className="h-8 w-8 bg-blue-700 rounded-lg flex items-center justify-center shadow-md shadow-blue-900/10">
                             <Activity size={20} className="text-white" />
                         </div>
                         <div>
-                            <h1 className="text-lg font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                            <h1 className="text-lg font-bold text-slate-900">
                                 OmniStack
                             </h1>
-                            <p className="text-[10px] text-slate-400 tracking-wider">ORCHESTRATOR</p>
+                            <p className="text-[10px] text-slate-500 tracking-wider">ORCHESTRATOR</p>
                         </div>
                     </div>
                 )}
                 <button
                     onClick={() => setCollapsed(!collapsed)}
-                    className="p-1.5 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-colors absolute -right-3 top-6 bg-slate-800 border border-white/10 shadow-lg"
+                    className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors absolute -right-3 top-6 bg-white border border-slate-200 shadow-sm"
                 >
                     {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
                 </button>
@@ -49,37 +51,44 @@ const Sidebar = () => {
                         key={item.path}
                         to={item.path}
                         className={clsx(
-                            "flex items-center space-x-3 px-3 py-3 rounded-xl transition-all duration-300 relative group overflow-hidden",
+                            "flex items-center space-x-3 px-3 py-3 rounded-lg transition-all duration-200 ease-out relative group overflow-hidden",
                             location.pathname === item.path
-                                ? "bg-blue-600/10 text-blue-400 shadow-[0_0_20px_rgba(59,130,246,0.15)] border border-blue-500/20"
-                                : "text-slate-400 hover:bg-white/5 hover:text-white border border-transparent"
+                                ? "bg-slate-100 text-blue-700 font-medium"
+                                : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
                         )}
                     >
-                        <div className={clsx("relative z-10", location.pathname === item.path ? "text-blue-400" : "group-hover:text-white")}>
+                        <div className={clsx("relative z-10", location.pathname === item.path ? "text-blue-700" : "group-hover:text-slate-900")}>
                             <item.icon size={20} strokeWidth={1.5} />
                         </div>
                         {!collapsed && (
-                            <span className="font-medium text-sm relative z-10">{item.label}</span>
-                        )}
-                        {location.pathname === item.path && (
-                            <div className="absolute inset-0 bg-blue-400/5 blur-xl group-hover:bg-blue-400/10 transition-colors" />
+                            <span className="text-sm relative z-10">{item.label}</span>
                         )}
                     </Link>
                 ))}
             </nav>
 
-            <div className="p-4 border-t border-white/5">
+            <div className="p-4 border-t border-slate-200">
                 <div className={clsx("flex items-center space-x-3", collapsed ? "justify-center" : "")}>
-                    <div className="h-9 w-9 rounded-full bg-gradient-to-tr from-purple-500 to-indigo-500 p-[1px]">
-                        <div className="h-full w-full rounded-full bg-slate-900 p-0.5">
+                    <div className="h-9 w-9 rounded-full bg-slate-100 border border-slate-200 p-[1px]">
+                        <div className="h-full w-full rounded-full bg-slate-50 p-0.5">
                             <img src="https://ui-avatars.com/api/?name=Admin+User&background=random" alt="User" className="rounded-full" />
                         </div>
                     </div>
                     {!collapsed && (
-                        <div>
-                            <p className="text-sm font-medium text-white">Admin User</p>
+                        <div className="flex-1">
+                            <p className="text-sm font-medium text-slate-900">Admin User</p>
                             <p className="text-xs text-slate-500">View Profile</p>
                         </div>
+                    )}
+
+                    {!collapsed && (
+                        <button
+                            onClick={logout}
+                            className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                            title="Sign Out"
+                        >
+                            <LogOut size={18} />
+                        </button>
                     )}
                 </div>
             </div>

@@ -18,13 +18,13 @@ const Dashboard = () => {
         return () => clearInterval(interval);
     }, []);
 
-    if (!summary) return <div className="p-8 text-white animate-pulse">Initializing Dashboard...</div>;
+    if (!summary) return <div className="p-8 text-slate-500">Initializing Dashboard...</div>;
 
     const stats = [
-        { label: 'Active Tenants', value: summary.active_tenants, icon: Server, color: 'text-blue-400', bg: 'bg-blue-500/10', trend: '+2' },
-        { label: 'System Health', value: summary.system_health, icon: Activity, color: 'text-emerald-400', bg: 'bg-emerald-500/10', trend: 'Stable' },
-        { label: 'Hourly Run Rate', value: `$${summary.total_cost_per_hour}`, icon: DollarSign, color: 'text-purple-400', bg: 'bg-purple-500/10', trend: '-8%' },
-        { label: 'Active Alerts', value: summary.active_alerts, icon: AlertTriangle, color: 'text-amber-400', bg: 'bg-amber-500/10', trend: '0' },
+        { label: 'Active Tenants', value: summary.active_tenants, icon: Server, color: 'text-blue-600', bg: 'bg-blue-50', trend: '+2' },
+        { label: 'System Health', value: summary.system_health, icon: Activity, color: 'text-emerald-600', bg: 'bg-emerald-50', trend: 'Stable' },
+        { label: 'Hourly Run Rate', value: `$${summary.total_cost_per_hour}`, icon: DollarSign, color: 'text-purple-600', bg: 'bg-purple-50', trend: '-8%' },
+        { label: 'Active Alerts', value: summary.active_alerts, icon: AlertTriangle, color: 'text-amber-600', bg: 'bg-amber-50', trend: '0' },
     ];
 
     // Mock Chart Data if live metrics empty
@@ -42,20 +42,20 @@ const Dashboard = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="p-8 space-y-8 max-w-7xl mx-auto"
+            className="p-8 space-y-8 max-w-7xl mx-auto text-slate-900"
         >
             {/* Header */}
             <div className="flex justify-between items-end">
                 <div>
-                    <h2 className="text-3xl font-bold text-white mb-2">Command Center</h2>
-                    <p className="text-slate-400">Real-time overview of your eCommerce infrastructure.</p>
+                    <h2 className="text-3xl font-bold text-slate-900 mb-2">Command Center</h2>
+                    <p className="text-slate-500">Real-time overview of your eCommerce infrastructure.</p>
                 </div>
-                <div className="flex items-center space-x-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full">
+                <div className="flex items-center space-x-2 px-3 py-1 bg-emerald-50 border border-emerald-200 rounded-full">
                     <span className="relative flex h-2 w-2">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                         <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                     </span>
-                    <span className="text-xs font-medium text-emerald-400">System Online</span>
+                    <span className="text-xs font-medium text-emerald-700">System Online</span>
                 </div>
             </div>
 
@@ -67,36 +67,35 @@ const Dashboard = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: i * 0.1 }}
-                        className="glass-card p-6 relative overflow-hidden group hover:border-white/20 transition-all"
+                        className="glass-card p-6 relative overflow-hidden group hover:border-blue-200 transition-all bg-white border border-slate-200 shadow-sm"
                     >
                         <div className="flex justify-between items-start mb-4">
                             <div className={clsx("p-3 rounded-lg", stat.bg)}>
                                 <stat.icon className={stat.color} size={24} />
                             </div>
-                            <span className={clsx("text-xs font-medium px-2 py-1 rounded-full bg-white/5", stat.trend.startsWith('-') ? 'text-emerald-400' : 'text-slate-300')}>
+                            <span className={clsx("text-xs font-medium px-2 py-1 rounded-full", stat.trend.startsWith('-') ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-600')}>
                                 {stat.trend}
                             </span>
                         </div>
                         <div>
-                            <p className="text-sm text-slate-400 px-1">{stat.label}</p>
-                            <p className="text-3xl font-bold mt-1 text-white tracking-tight">{stat.value}</p>
+                            <p className="text-sm text-slate-500 px-1">{stat.label}</p>
+                            <p className="text-3xl font-bold mt-1 text-slate-900 tracking-tight">{stat.value}</p>
                         </div>
-                        {/* Decorative Glow */}
-                        <div className={clsx("absolute -right-6 -bottom-6 w-24 h-24 rounded-full blur-2xl opacity-20 group-hover:opacity-40 transition-opacity", stat.bg.replace('/10', '/30'))} />
                     </motion.div>
-                ))}
-            </div>
+                ))
+                }
+            </div >
 
             {/* Main Chart Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            < div className="grid grid-cols-1 lg:grid-cols-3 gap-6" >
                 {/* Large Chart */}
-                <div className="lg:col-span-2 glass-card p-6 h-[400px] flex flex-col">
+                < div className="lg:col-span-2 glass-card p-6 h-[400px] flex flex-col bg-white border border-slate-200 shadow-sm rounded-xl" >
                     <div className="flex justify-between items-center mb-6 shrink-0">
-                        <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-                            <Zap size={18} className="text-blue-400" />
+                        <h3 className="text-lg font-semibold text-slate-900 flex items-center gap-2">
+                            <Zap size={18} className="text-blue-600" />
                             Traffic Volumetrics
                         </h3>
-                        <select className="bg-slate-900 border border-white/10 rounded-lg text-xs text-slate-300 px-3 py-1 outline-none">
+                        <select className="bg-white border border-slate-200 rounded-lg text-xs text-slate-600 px-3 py-1 outline-none hover:border-slate-300">
                             <option>Last 24 Hours</option>
                             <option>Last 7 Days</option>
                         </select>
@@ -106,45 +105,45 @@ const Dashboard = () => {
                             <AreaChart data={chartData}>
                                 <defs>
                                     <linearGradient id="colorTraffic" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3} />
-                                        <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
+                                        <stop offset="5%" stopColor="#2563EB" stopOpacity={0.1} />
+                                        <stop offset="95%" stopColor="#2563EB" stopOpacity={0} />
                                     </linearGradient>
                                 </defs>
-                                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+                                <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} className="stroke-slate-200" />
                                 <XAxis dataKey="name" stroke="#64748b" fontSize={12} tickLine={false} axisLine={false} />
                                 <YAxis stroke="#64748b" fontSize={12} tickLine={false} axisLine={false} />
                                 <Tooltip
-                                    contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b', color: '#f8fafc' }}
-                                    itemStyle={{ color: '#bae6fd' }}
+                                    contentStyle={{ backgroundColor: 'var(--tw-prose-body)', borderColor: 'var(--tw-prose-invert-body)', color: '#0f172a', borderRadius: '8px' }}
+                                    itemStyle={{ color: '#2563EB' }}
                                 />
-                                <Area type="monotone" dataKey="traffic" stroke="#3b82f6" strokeWidth={3} fillOpacity={1} fill="url(#colorTraffic)" />
+                                <Area type="monotone" dataKey="traffic" stroke="#2563EB" strokeWidth={2} fillOpacity={1} fill="url(#colorTraffic)" />
                             </AreaChart>
                         </ResponsiveContainer>
                     </div>
-                </div>
+                </div >
 
                 {/* Side Panel: Recent Alerts */}
-                <div className="glass-card p-0 flex flex-col h-[400px]">
-                    <div className="p-6 border-b border-white/5">
-                        <h3 className="text-lg font-semibold text-white">Live Activity</h3>
+                < div className="glass-card p-0 flex flex-col h-[400px] bg-white border border-slate-200 shadow-sm rounded-xl" >
+                    <div className="p-6 border-b border-slate-100">
+                        <h3 className="text-lg font-semibold text-slate-900">Live Activity</h3>
                     </div>
                     <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
                         {[1, 2, 3, 4, 5].map((i) => (
-                            <div key={i} className="flex items-start space-x-3 p-3 rounded-lg hover:bg-white/5 transition-colors">
-                                <div className="h-2 w-2 mt-2 rounded-full bg-blue-500 shrink-0" />
+                            <div key={i} className="flex items-start space-x-3 p-3 rounded-lg hover:bg-slate-50 transition-colors">
+                                <div className="h-2 w-2 mt-2 rounded-full bg-blue-600 shrink-0" />
                                 <div>
-                                    <p className="text-sm text-slate-200">High latency detected on <span className="text-blue-400 font-medium">Magento-01</span></p>
-                                    <p className="text-xs text-slate-500 mt-1">2 mins ago • Auto-scaling triggered</p>
+                                    <p className="text-sm text-slate-700">High latency detected on <span className="text-blue-700 font-medium">Magento-01</span></p>
+                                    <p className="text-xs text-slate-400 mt-1">2 mins ago • Auto-scaling triggered</p>
                                 </div>
                             </div>
                         ))}
                     </div>
-                    <div className="p-4 border-t border-white/5 bg-white/[0.02]">
-                        <button className="w-full py-2 text-sm text-center text-blue-400 hover:text-blue-300 font-medium">View All Logs</button>
+                    <div className="p-4 border-t border-slate-100 bg-slate-50/50">
+                        <button className="w-full py-2 text-sm text-center text-blue-600 hover:text-blue-700 font-medium">View All Logs</button>
                     </div>
-                </div>
-            </div>
-        </motion.div>
+                </div >
+            </div >
+        </motion.div >
     );
 };
 
